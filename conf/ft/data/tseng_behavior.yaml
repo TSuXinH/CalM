@@ -1,6 +1,6 @@
-registry_json: '/data/user/proj/nfm/ckpt/pretrain_AR_celegans/20260331_ddp_all_win2_hydra/registry.json'
-heldin_root: '/data/user/proj/nfm/data/20260329_celegans_all_win2_token_held_in_with_beh'
-heldout_root: '/data/user/proj/nfm/data/20260329_celegans_all_win2_token_held_out_with_beh'
+registry_json: ''
+heldin_root: ''
+heldout_root: ''
 token_key: 'token'
 beh_key: 'behavior'
 vocab: 128

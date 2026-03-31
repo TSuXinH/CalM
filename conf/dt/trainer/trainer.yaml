@@ -7,7 +7,7 @@ eval_use_ema_weights: true
 heldout_epochs: 160
 heldout_lr: null
 heldout_train_mode: "embed_only"
-heldout_init_ckpt: '/data/user/proj/nfm/ckpt/pretrain_AR_celegans/20260331_ddp_all_win2_hydra/axial_ar_ep064.pth'
+heldout_init_ckpt: ''
 heldout_init_use_ema_weights: false
 train_mode: "full"
 gen_prefix: 19

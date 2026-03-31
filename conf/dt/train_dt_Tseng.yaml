@@ -21,9 +21,9 @@ runtime:
   sampler_pad: true
 
 paths:
-  output_root: "/data/user/proj/nfm/ckpt/pretrain_AR_celegans/20260331_ddp_all_win2_hydra"
-  ckpt_dir: "/data/user/proj/nfm/ckpt/pretrain_AR_celegans/20260331_ddp_all_win2_hydra"
-  gen_outdir: "/data/user/proj/nfm/ckpt/pretrain_AR_celegans/20260331_ddp_all_win2_hydra/gen"
+  output_root: ""
+  ckpt_dir: ""
+  gen_outdir: ""
 
 hydra:
   job:

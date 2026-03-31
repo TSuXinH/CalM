@@ -21,11 +21,11 @@ logging:
   plot_every: 1
 
 paths:
-  output_root: "/data/user/proj/nfm/runs/vq"
-  ckpt_dir: "${hydra:runtime.output_dir}/checkpoints"
+  output_root: ""
+  ckpt_dir: ""
 
 hydra:
   job:
     chdir: false
   run:
-    dir: "${paths.output_root}/${now:%Y%m%d_%H%M%S}_${remark}"
+    dir: ""

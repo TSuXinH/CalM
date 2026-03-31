@@ -8,8 +8,8 @@ from hydra.core.config_store import ConfigStore
 
 @dataclass
 class FTDataConfig:
-    registry_json: str = '/data/user/proj/nfm/ckpt/pretrain_AR/20260122_ddp_ft/registry.json'
-    heldin_root: Optional[str] = '/data/user/proj/nfm/data/20260112_Tseng_train_token'
+    registry_json: str = ''
+    heldin_root: Optional[str] = ''
     heldout_root: Optional[str] = None
     token_key: str = 'token'
     beh_key: str = 'behavior'
@@ -22,7 +22,7 @@ class FTDataConfig:
 
 @dataclass
 class FTBackboneConfig:
-    ar_ckpt: str = '/data/user/proj/nfm/ckpt/pretrain_AR/20260122_ddp_ft/axial_ar_ep160.pth'
+    ar_ckpt: str = ''
     prefer_ema_weights: bool = True
     compile: bool = False
     compile_dynamic: bool = True
@@ -69,7 +69,7 @@ class FTCacheConfig:
     build: bool = True
     use: bool = True
     force: bool = False
-    dir: str = '/data/user/proj/nfm/ckpt/finetuned_decoding/ft_behavior/cache'
+    dir: str = ''
     dtype: str = 'fp16'    # fp16 / bf16 / fp32
     max_batches: int = -1
     allow_mismatch: bool = False
@@ -104,8 +104,8 @@ class FTRuntimeConfig:
 
 @dataclass
 class FTPathsConfig:
-    output_root: str = '/data/user/proj/nfm/runs/ft'
-    save_dir: str = '${hydra:runtime.output_dir}'
+    output_root: str = ''
+    save_dir: str = ''
 
 
 @dataclass

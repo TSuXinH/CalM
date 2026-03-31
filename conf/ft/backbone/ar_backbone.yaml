@@ -1,6 +1,6 @@
-ar_ckpt: '/data/user/proj/nfm/ckpt/pretrain_AR_celegans/20260331_ddp_all_win2_hydra/axial_ar_ep064.pth'
+ar_ckpt: ''
 prefer_ema_weights: true
 compile: true
 compile_dynamic: true
-init_head_ckpt: '/data/user/proj/nfm/ckpt/decoding_celegans/20260330_ddp_all_win2_ft_hydra/heldout_ft/best_base.pt'
-init_head_registry_json: '/data/user/proj/nfm/ckpt/pretrain_AR_celegans/20260331_ddp_all_win2_hydra/registry.json'
+init_head_ckpt: ''
+init_head_registry_json: ''

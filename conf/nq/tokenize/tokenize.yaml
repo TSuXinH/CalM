@@ -1,10 +1,10 @@
-sub: "sub-3_processed"
+sub: ""
 date: "20260226"
 epoch: 70
-keywords: "multi-plane-imaging_behavior+ophys_AR_70_15_15_allplanes"
+keywords: ""
 glob_pattern: "**/*{keywords}*"
-out_root_base: "/data/user/proj/nfm/data/20260226_Tseng_train_token"
-ckpt_path: "/data/user/proj/nfm/runs/vq/20260225_122210_0225_hydra/checkpoints/VQ_Uni_Lookahead0_DiscWin4_OverlapWin4_NEmb128_DimEmb512_Heads4_EncLayer4_DecLayer4_AR2_MLM2_Gumbel_Recluster_Reset0.2_DecCausal_E100_WEmb1.00_WCommit0.50_Ent0.5_hfp0.00e-4_FFT0.00e-4_ExtLoss_Remark_0225_hydra/CurE${tokenize.epoch}.pth"
+out_root_base: ""
+ckpt_path: ""
 neuron_chunk: 512
 use_amp: false
 align_mod: 4

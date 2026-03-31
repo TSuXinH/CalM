@@ -1,5 +1,5 @@
-data_root: "/data/user/proj/nfm/data/20260113_Tseng_held_in"
-pattern: "*AR_70_15_15_allplanes.npz"
+data_root: ""
+pattern: "*"
 exclude_dir_prefix: ["prev_"]
 sample_batch: 256
 batch_size: 1

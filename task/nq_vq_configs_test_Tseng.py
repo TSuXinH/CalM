@@ -6,13 +6,13 @@ from task.nq_vq_configs_train_Tseng import VQTrainCfg, register_configs
 
 @dataclass
 class TokenizeCfg:
-    sub: str = "sub-3_processed"
-    date: str = "20260115"
+    sub: str = ""
+    date: str = ""
     epoch: int = 8
-    keywords: str = "multi-plane-imaging_behavior+ophys_AR_70_15_15_allplanes"
+    keywords: str = ""
     glob_pattern: str = "**/*{keywords}*"
-    out_root_base: str = "/data/user/proj/nfm/data/20260115_Tseng_train_token"
-    ckpt_path: str = "/data/user/proj/nfm/ckpt/Tseng/VQ_multi_animal/.../CurE${tokenize.epoch}.pth"
+    out_root_base: str = ""
+    ckpt_path: str = ""
     neuron_chunk: int = 512
     use_amp: bool = False
     align_mod: Optional[int] = 4

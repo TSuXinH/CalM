@@ -1,5 +1,4 @@
-````md
-# Quick Start
+# Quick Start: CalM with hydra
 
 This project uses a 3-stage workflow:
 
@@ -9,18 +8,25 @@ This project uses a 3-stage workflow:
 
 ---
 
-# 1. VQ Quick Start
+# 1. VQ / Neural Quantizer (NQ)
 
 ## Relevant files
 
 ```text
 conf/nq/
   data/
+    Tseng_trial.yaml
+    Tseng_trial_small.yaml
   loss/
+    loss.yaml
   model/
+    model.yaml
   optim/
+    adamw.yaml
   tokenize/
+    tokenize.yaml
   trainer/
+    trainer.yaml
   vq_train_Tseng.yaml
   vq_test_Tseng.yaml
 
@@ -37,11 +43,72 @@ task/
   nq_test_Tseng.py
   nq_vq_configs_train_Tseng.py
   nq_vq_configs_test_Tseng.py
-````
+```
 
-## 1.1 Train VQ
+## 1.1 Main entries
 
-Edit the config groups under `conf/nq/` as needed, then run:
+```bash
+task/nq_train_Tseng.py
+task/nq_test_Tseng.py
+```
+
+## 1.2 Main configs to edit
+
+### `conf/nq/data/Tseng_trial.yaml`
+
+```yaml
+# example dataset config
+# edit dataset root / split-specific settings here
+data_root: /path/to/tseng_data
+```
+
+### `conf/nq/model/model.yaml`
+
+```yaml
+# example VQ model config
+n_emb: 128
+dim_emb: 512
+heads: 4
+enc_layers: 4
+dec_layers: 4
+use_gumbel: true
+use_gumbel_hard: true
+```
+
+### `conf/nq/loss/loss.yaml`
+
+```yaml
+# example loss config
+w_emb: 1.0
+w_commit: 0.5
+```
+
+### `conf/nq/optim/adamw.yaml`
+
+```yaml
+lr: 5e-4
+weight_decay: 1e-3
+```
+
+### `conf/nq/trainer/trainer.yaml`
+
+```yaml
+epochs: 100
+compile: false
+compile_dynamic: false
+```
+
+### `conf/nq/tokenize/tokenize.yaml`
+
+```yaml
+# example tokenize / inference config
+ckpt_path: /path/to/vq_checkpoint.pth
+out_root: /path/to/token_output
+resume: true
+chunk: 0
+```
+
+## 1.3 Train neural quantizer
 
 ```bash
 python -m task.nq_train_Tseng
@@ -50,10 +117,13 @@ python -m task.nq_train_Tseng
 Example with overrides:
 
 ```bash
-python -m task.nq_train_Tseng data=Tseng_trial_small trainer.epochs=100 optim.lr=5e-4
+python -m task.nq_train_Tseng \
+  data=Tseng_trial_small \
+  trainer.epochs=100 \
+  optim.lr=5e-4
 ```
 
-## 1.2 Inspect the merged Hydra config
+## 1.4 Inspect the merged Hydra config
 
 ```bash
 python -m task.nq_train_Tseng --cfg job --resolve
@@ -61,11 +131,11 @@ python -m task.nq_train_Tseng --cfg job --resolve
 
 Use this to verify:
 
-* the correct YAMLs are loaded
-* CLI overrides are applied
-* output paths are correct
+- the correct YAMLs are loaded
+- CLI overrides are applied
+- output paths are correct
 
-## 1.3 Evaluate / reconstruct with a trained VQ
+## 1.5 Evaluate / reconstruct with a trained VQ
 
 Set the checkpoint path in `conf/nq/vq_test_Tseng.yaml`, then run:
 
@@ -79,7 +149,7 @@ Or override from CLI:
 python -m task.nq_test_Tseng paths.ckpt_path=/path/to/checkpoint.pth
 ```
 
-## 1.4 Export tokens for downstream AR training
+## 1.6 Export tokens for downstream AR training
 
 Use the tokenize-related settings in:
 
@@ -93,7 +163,7 @@ Then run:
 python -m task.nq_test_Tseng tokenize=tokenize
 ```
 
-## 1.5 Important note for token export
+## 1.7 Important note for token export
 
 Disable Gumbel during inference / tokenization:
 
@@ -104,6 +174,38 @@ model:
 ```
 
 Do this in the **test / tokenize config**, not in the training config.
+
+## 1.8 Common commands
+
+### Train VQ
+
+```bash
+python -m task.nq_train_Tseng
+```
+
+### Train on a smaller dataset
+
+```bash
+python -m task.nq_train_Tseng data=Tseng_trial_small
+```
+
+### Inspect config
+
+```bash
+python -m task.nq_train_Tseng --cfg job --resolve
+```
+
+### Test / reconstruct
+
+```bash
+python -m task.nq_test_Tseng
+```
+
+### Export tokens
+
+```bash
+python -m task.nq_test_Tseng tokenize=tokenize
+```
 
 ---
 
@@ -543,25 +645,43 @@ PYTHONPATH=. CUDA_VISIBLE_DEVICES=0,1,2,3 torchrun --nproc_per_node=4 task/ft_be
 
 ---
 
-# 4. Full Pipeline Summary
+## Data Curation
 
-## VQ
 
-1. Train VQ
-2. Test / reconstruct VQ
-3. Export tokens for DT
+The preprocessing pipeline is below:
 
-## DT
+1. **Load one session**
+   - read the neural activity matrix from the session file
+   - optionally read aligned behavior channels
 
-1. Train on held-in sessions
-2. Evaluate on held-in sessions
-3. Fine-tune on held-out sessions if needed
-4. Evaluate held-out or both
+2. **Construct trials**
+   - split the continuous session into fixed-length non-overlapping windows
+   - each window is treated as one trial
 
-## FT
+3. **Split into train / val / test**
+   - randomly split trials with a 70 / 15 / 15 ratio
 
-1. Train base behavior head on held-in sessions
-2. Save `best_base.pt`
-3. Fine-tune held-out behavior head from base head
-4. Save `best_heldout.pt` or `final_head.pt`
-5. Evaluate held-in / held-out as needed
+4. **Preprocess neural activity**
+   - apply causal EMA smoothing
+   - compute mean and standard deviation using **training trials only**
+   - apply the same normalization statistics to validation and test trials
+
+5. **Preprocess behavior**
+   - keep the aligned behavior channels with the same trial boundaries
+   - if enabled, compute behavior z-score statistics from the **training split only**
+   - apply the same behavior normalization to validation and test trials
+
+6. **Save curated AR-format data**
+   - each session is saved as one `.npz` file containing:
+     - `train_padded_X`, `val_padded_X`, `test_padded_X`
+     - `train_padded_Y`, `val_padded_Y`, `test_padded_Y`
+     - `train_lengths`, `val_lengths`, `test_lengths`
+     - `train_trial_ids`, `val_trial_ids`, `test_trial_ids`
+     - `z_mean`, `z_std`
+     - optionally `beh_z_mean`, `beh_z_std`
+
+The final tensor layout is:
+- neural data: `(B, N, T)`
+- behavior data: `(B, C, T)`
+
+where `B` is the number of trials, `N` is the number of neurons, `C` is the number of behavior channels, and `T` is the trial length.

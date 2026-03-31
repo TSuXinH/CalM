@@ -8,10 +8,10 @@ from hydra.core.config_store import ConfigStore
 
 @dataclass
 class DataDT:
-    data_root: str = "/data/user/proj/nfm/data/20260115_Tseng_train_token"
-    heldout_root: Optional[str] = "/data/user/proj/nfm/data/20260117_heldout_token_subset_l23"
-    registry_json: Optional[str] = "/data/user/proj/nfm/ckpt/pretrain_AR/20260119_causal/registry.json"
-    registry_json_heldout: Optional[str] = "/data/user/proj/nfm/ckpt/pretrain_AR/20260119_causal/registry_heldout.json"
+    data_root: str = ""
+    heldout_root: Optional[str] = ""
+    registry_json: Optional[str] = ""
+    registry_json_heldout: Optional[str] = ""
     pattern: str = "*.npz"
     exclude_dir_prefix: List[str] = field(default_factory=lambda: ["prev_"])
     preload: bool = True
@@ -133,9 +133,9 @@ class RuntimeDT:
 
 @dataclass
 class PathsDT:
-    output_root: str = "/data/user/proj/nfm/runs/dt"
-    ckpt_dir: str = "${hydra:runtime.output_dir}/checkpoints"
-    gen_outdir: str = "${hydra:runtime.output_dir}/gen"
+    output_root: str = ""
+    ckpt_dir: str = ""
+    gen_outdir: str = ""
 
 
 @dataclass

@@ -1,4 +1,4 @@
-vq_state: "/data/user/proj/nfm/ckpt/celegans/VQ_ckpt/VQ_Uni_Lookahead1_DiscWin2_OverlapWin2_NEmb128_DimEmb512_Heads4_EncLayer4_DecLayer4_AR2_MLM2_Gumbel_Recluster_Reset0.2_E100_WEmb1.00_WCommit0.50_Ent0.5_hfp0.00e-4_FFT0.00e-4_ExtLoss_Remark_B1_Lr0.50x10-4_0327_celegans/CurE46.pth"
+vq_state: ""
 vq_disc_win: 2
 vq_overlap: 2
 vq_n_emb: 128

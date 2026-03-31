@@ -4,8 +4,8 @@ from hydra.core.config_store import ConfigStore
 
 @dataclass
 class DataCfg:
-    data_root: str = "/data/user/proj/nfm/data/20260111_Tseng_train"
-    pattern: str = "*AR_70_15_15_allplanes.npz"
+    data_root: str = ""
+    pattern: str = ""
     exclude_dir_prefix: List[str] = field(default_factory=lambda: ["prev_"])
     sample_batch: int = 256
     batch_size: int = 1
@@ -94,8 +94,8 @@ class LossCfg:
 
 @dataclass
 class PathsCfg:
-    output_root: str = "/data/user/proj/nfm/runs/vq"
-    ckpt_dir: str = "${hydra:runtime.output_dir}/checkpoints"
+    output_root: str = ""
+    ckpt_dir: str = ""
 
 @dataclass
 class LoggingCfg:
