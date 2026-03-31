@@ -1,0 +1,8 @@
+enabled: true
+epochs: 100
+lr: 0.0072
+weight_decay: 1e-3
+warmup_frac: 0.1
+eval_every_epochs: 5
+do_test_during_train: true
+ft_mode: 'newrows'  # all or newrows

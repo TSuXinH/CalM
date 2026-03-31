@@ -1,0 +1,6 @@
+name: 'lowrank_uv'
+rank: 16
+dropout: 0.5
+smooth_kernel: 9
+conv_init_identity: true
+conv_bias: true

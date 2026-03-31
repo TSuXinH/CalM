@@ -1,0 +1,10 @@
+d_model: 256
+n_layers: 4
+n_heads: 4
+d_ff: 1024
+dropout: 0.25
+emb_dropout: 0.25
+attn_dropout: 0.25
+train_window_T: 0
+eval_use_full_trial: true
+use_abs_time_emb: false

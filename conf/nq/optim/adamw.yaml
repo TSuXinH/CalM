@@ -1,0 +1,4 @@
+lr: 5e-5
+weight_decay: 5e-6
+weight_decay_no_decay: 0.0
+eta_min: 1e-6

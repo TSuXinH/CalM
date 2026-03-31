@@ -1,0 +1,7 @@
+enabled: false
+epochs: 200
+lr: 0.0036
+weight_decay: 1e-2
+warmup_frac: 0.1
+eval_every_epochs: 5
+do_test_during_train: true

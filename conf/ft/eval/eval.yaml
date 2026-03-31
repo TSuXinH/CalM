@@ -1,0 +1,7 @@
+eval_held_in: false
+eval_held_out: true
+eval_held_in_init: false
+eval_held_out_init: false
+max_eval_batches: -1
+print_each_session: false
+print_limit_sessions: -1

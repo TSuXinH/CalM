@@ -1,0 +1,31 @@
+defaults:
+  - vq_train
+  - data: Tseng_trial_small
+  - model: model
+  - loss: loss
+  - trainer: trainer
+  - optim: adamw
+  - _self_
+
+remark: "0225_hydra"
+
+runtime:
+  device: "cuda"
+  tf32: true
+  matmul_precision: "high"
+  compile: true
+  seed: 0
+
+logging:
+  plot_dir: null
+  plot_every: 1
+
+paths:
+  output_root: "/data/user/proj/nfm/runs/vq"
+  ckpt_dir: "${hydra:runtime.output_dir}/checkpoints"
+
+hydra:
+  job:
+    chdir: false
+  run:
+    dir: "${paths.output_root}/${now:%Y%m%d_%H%M%S}_${remark}"

@@ -1,0 +1,26 @@
+w_embedding: 1.0
+w_commitment: 0.5
+w_entropy: 0.5
+w_fft: 1e-9
+w_hfp: 1e-9
+extra_loss: "pearson" 
+extra_loss_ratio: 0.5
+w_orth: 5e-6
+w_latent_tv: 5e-2
+w_latent_tv2: 5e-4
+w_logit_js: 2e-3
+logit_js_tau: 1.0
+w_sticky: 1e-1
+w_bigram_condent: 0.5
+w_bigram_ce: 0.5
+w_bigram_align: 0.5
+ar_k_list: [1, 2, 3, 4]
+w_ar_k_ce: 0.5
+w_ar_align: 0.5
+w_cpc: 0.5
+cpc_tau: 0.1
+w_mlm_ce: 0.0
+mlm_mask_prob: 0.15
+condent_bits: true
+condent_norm: true
+ce_label_smoothing: 0.05

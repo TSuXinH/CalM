@@ -1,0 +1,9 @@
+enabled: true
+build: true
+use: true
+force: false
+dir: '/data/user/proj/nfm/ckpt/decoding_celegans/20260330_ddp_all_win2_ft_hydra/cache'
+dtype: 'fp16'
+max_batches: -1
+allow_mismatch: false
+allow_empty_eval: true

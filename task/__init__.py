@@ -1,0 +1,1 @@
+from .nq_vq_configs_train_Tseng import register_configs

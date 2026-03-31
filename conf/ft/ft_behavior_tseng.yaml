@@ -1,0 +1,35 @@
+defaults:
+  - ft_behavior
+  - data: tseng_behavior
+  - backbone: ar_backbone
+  - head: lowrank_uv
+  - train@train_base: base
+  - train@train_heldout: heldout
+  - cache: feature_cache
+  - eval: eval
+  - _self_
+
+remark: 'ft_behavior_tseng'
+mode: 'finetune_heldout'
+run_name: 'heldout_ft'
+
+runtime:
+  device: 'auto'
+  seed: 0
+  tf32: true
+  matmul_precision: 'high'
+  use_bf16: true
+  ddp: true
+  dist_backend: 'nccl'
+  dist_url: 'env://'
+  local_rank: 0
+
+paths:
+  output_root: '/data/user/proj/nfm/ckpt/decoding_celegans/20260330_ddp_all_win2_ft_hydra'
+  save_dir: '/data/user/proj/nfm/ckpt/decoding_celegans/20260330_ddp_all_win2_ft_hydra'
+
+hydra:
+  job:
+    chdir: false
+  run:
+    dir: '/data/user/proj/nfm/ckpt/decoding_celegans/20260330_ddp_all_win2_ft_hydra/{remark}'

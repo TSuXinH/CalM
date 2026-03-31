@@ -1,0 +1,5 @@
+lr: 1e-3
+min_lr: 1e-6
+warmup_ratio: 0.06
+lr_schedule: "cosine" 
+weight_decay: 1e-3

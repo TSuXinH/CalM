@@ -1,0 +1,8 @@
+epoch_max: 100
+annealing_epoch: 80
+epoch_reset: 10
+epoch_warmup: 1
+recluster_interval_epoch: 20
+recluster_end_epoch: 80
+initial_ema_count_after_recluster: 1.0
+evaluation_interval: 2

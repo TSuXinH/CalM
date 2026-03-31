@@ -1,0 +1,17 @@
+data_root: "/data/user/proj/nfm/data/20260329_celegans_all_win2_token_held_in_with_beh"
+heldout_root: "/data/user/proj/nfm/data/20260329_celegans_all_win2_token_held_out_with_beh"
+registry_json: "/data/user/proj/nfm/ckpt/pretrain_AR_celegans/20260331_ddp_all_win2_hydra/registry.json"
+registry_json_heldout: "/data/user/proj/nfm/ckpt/pretrain_AR_celegans/20260331_ddp_all_win2_hydra/registry_heldout.json"
+pattern: "*.npz"
+exclude_dir_prefix: ["prev_"]
+preload: true
+train_split: "train"
+val_split: "val"
+test_split: "test"
+token_key: "token"
+vocab: 128
+n_sub: 512
+batch_size: 4
+eval_batch_size: 1
+num_workers: 4
+pin_memory: true

@@ -1,0 +1,15 @@
+defaults:
+  - vq_test
+  - data: Tseng_trial_small
+  - model: model
+  - loss: loss
+  - trainer: trainer
+  - optim: adamw     
+  - tokenize: tokenize 
+  - _self_
+
+remark: "tseng_test_tokenize"
+
+hydra:
+  job:
+    chdir: false

@@ -1,0 +1,32 @@
+defaults:
+  - dt_train
+  - data: Tseng_train
+  - model: model
+  - optim: adamw
+  - nq@vq: nq
+  - trainer@train: trainer
+  - _self_
+
+remark: "dt_Tseng"
+
+runtime:
+  device: "auto"
+  seed: 1337
+  tf32: true
+  matmul_precision: "high"
+  use_bf16: true
+  ddp_backend: "nccl"
+  deterministic: false
+  registry_per_rank: true
+  sampler_pad: true
+
+paths:
+  output_root: "/data/user/proj/nfm/ckpt/pretrain_AR_celegans/20260331_ddp_all_win2_hydra"
+  ckpt_dir: "/data/user/proj/nfm/ckpt/pretrain_AR_celegans/20260331_ddp_all_win2_hydra"
+  gen_outdir: "/data/user/proj/nfm/ckpt/pretrain_AR_celegans/20260331_ddp_all_win2_hydra/gen"
+
+hydra:
+  job:
+    chdir: false
+  run:
+    dir: "${paths.output_root}/${now:%Y%m%d_%H%M%S}_${remark}"
