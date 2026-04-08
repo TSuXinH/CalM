@@ -1,6 +1,190 @@
 # Quick Start: CalM with hydra
 
-This project uses a 3-stage workflow:
+This repository contains the full code for the CalM pipeline and main paper result reproduction.
+
+Main stages:
+1. Preprocess raw session data
+2. Train / test the neural quantizer (NQ)
+3. Export tokens
+4. Train the dynamics transformer (DT)
+5. Fine-tune / evaluate DT on held-out sessions
+6. Train / evaluate the behavior decoding head (FT)
+
+## Environment
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+````
+
+Tested environment:
+
+* Python 3.11.13
+* Hydra / OmegaConf
+* 8 × NVIDIA A100 40GB GPUs
+
+Most training / evaluation commands below use `torchrun`.
+
+## Minimal reproduction path
+
+### Step 0. Preprocess raw data
+
+Main script:
+`preprocess/preprocess.py`
+
+Add raw sessions to generate curated `.npz` files for NQ.
+
+
+```bash
+python preprocess/preprocess.py
+```
+
+
+
+### Step 1. Train / test NQ
+
+Usually edit only:
+
+* `conf/nq/data/Tseng_trial.yaml`
+* `conf/nq/trainer/trainer.yaml`
+
+Outputs:
+
+* NQ checkpoint
+* reconstruction / tokenizer results
+
+```bash
+python -m task.nq_train_Tseng
+python -m task.nq_test_Tseng
+```
+
+---
+
+### Step 2. Export tokens
+
+Usually edit only:
+
+* `conf/nq/tokenize/tokenize.yaml`
+
+Outputs:
+
+* tokenized held-in / held-out session data
+
+```bash
+python -m task.nq_test_Tseng tokenize=tokenize
+```
+
+### Step 3. Train DT on held-in sessions
+
+Usually edit only:
+
+* `conf/dt/data/Tseng_train.yaml`
+* `conf/dt/nq/nq.yaml`
+
+Outputs:
+
+* held-in DT checkpoint
+* held-in forecasting results
+
+```bash
+PYTHONPATH=. torchrun --nproc_per_node=8 task/dt_train_Tseng.py train.mode=train ...
+```
+
+### Step 4. Fine-tune / evaluate DT on held-out sessions
+
+Usually edit only:
+
+* `conf/dt/data/Tseng_train.yaml`
+* `conf/dt/trainer/trainer.yaml`
+
+Outputs:
+
+* held-out forecasting results
+
+Fine-tuning:
+
+```bash
+PYTHONPATH=. torchrun --nproc_per_node=8 task/dt_train_Tseng.py train.mode=finetune_heldout ...
+```
+
+Evaluation:
+
+```bash
+PYTHONPATH=. torchrun --nproc_per_node=8 task/dt_train_Tseng.py train.mode=eval_test train.eval_target=heldout ...
+```
+
+
+### Step 5. Train / evaluate the decoding head
+
+Held-in training:
+
+Usually edit only:
+
+* `conf/ft/data/tseng_behavior.yaml`
+* `conf/ft/backbone/ar_backbone.yaml`
+
+Outputs:
+
+* held-in / held-out decoding results
+
+```bash
+PYTHONPATH=. torchrun --nproc_per_node=8 task/ft_behavior_decode.py mode=train_base ...
+```
+
+Held-out fine-tuning:
+
+```bash
+PYTHONPATH=. torchrun --nproc_per_node=8 task/ft_behavior_decode.py mode=finetune_heldout ...
+```
+
+Evaluation:
+
+```bash
+PYTHONPATH=. torchrun --nproc_per_node=8 task/ft_behavior_decode.py mode=eval_only ...
+```
+
+
+## What usually needs editing
+
+For most users, only these fields need to be changed:
+
+* dataset roots
+* registry json paths
+* checkpoint paths
+* output / cache directories
+
+You usually do not need to modify most model hyperparameters to reproduce the main pipeline.
+
+## Paper result mapping
+
+* NQ reconstruction / tokenizer:
+
+  * `task/nq_train_Tseng.py`
+  * `task/nq_test_Tseng.py`
+
+* DT forecasting:
+
+  * `task/dt_train_Tseng.py`
+  * use `train.mode=train`, `finetune_heldout`, `eval_test`
+
+* Behavior decoding:
+
+  * `task/ft_behavior_decode.py`
+  * use `mode=train_base`, `mode=finetune_heldout`, `mode=eval_only`
+
+* Data preprocessing:
+
+  * `preprocess/preprocess.py`
+
+* Plotting / result scripts:
+
+  * matlab script in `plot`
+
+
+# Detailed guide: CalM with hydra
+
+The project structure:
 
 - `nq/`: VQ tokenizer
 - `dt/`: Dynamics Transformer backbone

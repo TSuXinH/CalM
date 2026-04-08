@@ -1,0 +1,8 @@
+einops>=0.8.2
+matplotlib>=3.10.8
+numpy>=1.23.5
+scikit_learn>=1.8.0
+scipy>=1.17.1
+torch>=2.8.0+cu126
+tqdm>=4.67.1
+wandb>=0.25.1
