@@ -65,7 +65,8 @@ class TemporalMHA_RoPE(nn.Module):
         attn_mask = None
         if key_padding_mask is not None:
             kpm = key_padding_mask.to(torch.bool)  # True=valid
-            attn_mask = (~kpm)[:, None, None, :]   # [B,1,1,T] True=mask key
+            attn_mask = torch.zeros((B_, 1, 1, T), dtype=q.dtype, device=q.device)
+            attn_mask = attn_mask.masked_fill((~kpm)[:, None, None, :], float("-inf"))
         dropout_p = self.drop.p if self.training else 0.0
         y = F.scaled_dot_product_attention(
             q, k, v,
