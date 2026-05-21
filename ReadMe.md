@@ -16,6 +16,7 @@ Install dependencies:
 
 ```bash
 pip install -r requirements.txt
+pip install torch>=2.8.0 --index-url https://download.pytorch.org/whl/cu126
 ````
 
 Tested environment:

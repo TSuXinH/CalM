@@ -12,6 +12,7 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 import random
+import copy
 from omegaconf import DictConfig, OmegaConf
 
 from dataset.dt_dataset import build_multisession_loaders_fixedN_v2
