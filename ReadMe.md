@@ -1,4 +1,4 @@
-# CalM 
+# News for CalM 
 
 🚀 2026.8: We have recently developed CAPT, a new and more powerful model that further extends CalM, even allows cross species transfer. Please refer to the correponding [paper](https://arxiv.org/abs/2607.23258) and [repository](https://github.com/TSuXinH/CAPT) for our latest work.
 
@@ -126,9 +126,8 @@ PYTHONPATH=. torchrun --nproc_per_node=8 task/dt_train_Tseng.py train.mode=eval_
 
 ### Step 5. Train / evaluate the decoding head
 
-Held-in training:
+Usually edit only below for held-in training:
 
-Usually edit only:
 
 * `conf/ft/data/tseng_behavior.yaml`
 * `conf/ft/backbone/ar_backbone.yaml`
