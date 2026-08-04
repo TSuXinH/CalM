@@ -1,3 +1,11 @@
+# CalM 
+
+🚀 2026.8: We have recently developed CAPT, a new and more powerful model that further extends CalM, even allows cross species transfer. Please refer to the correponding [paper](https://arxiv.org/abs/2607.23258) and [repository](https://github.com/TSuXinH/CAPT) for our latest work.
+
+⭐ 2026.5: We have released CalM, a multitask, pretrain-fine-tuning framework for  mouse calcium imaging trace dataset.
+
+
+
 # Quick Start: CalM with hydra
 
 This repository contains the full code for the CalM pipeline and main paper result reproduction.
@@ -870,3 +878,17 @@ The final tensor layout is:
 - behavior data: `(B, C, T)`
 
 where `B` is the number of trials, `N` is the number of neurons, `C` is the number of behavior channels, and `T` is the trial length.
+
+## Citation
+
+⭐ If you find **CalM** useful for your research, please consider giving this repository a star and citing our paper:
+
+```bibtex
+@inproceedings{xu2026calm,
+  title={CalM: A Self-Supervised Foundation Model for Population Dynamics in Calcium Imaging Data},
+  author={Xu, Xinhong and Zhang, Yimeng and Qian, Qichen and Zhang, Yuanlong},
+  booktitle={Proceedings of the 43rd International Conference on Machine Learning},
+  year={2026}
+}
+```
+
